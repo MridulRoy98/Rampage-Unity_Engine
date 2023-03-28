@@ -250,7 +250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offsetAmount: 1
-  offsetSpeed: 30
+  offsetSpeed: 3
   BackTrigger: {x: 0, y: 0, z: 192}
   SpawnPoint: {x: 0, y: 0, z: 48}
 --- !u!1 &303327470
@@ -918,7 +918,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offsetAmount: 1
-  offsetSpeed: 30
+  offsetSpeed: 3
   BackTrigger: {x: 0, y: 0, z: 192}
   SpawnPoint: {x: 0, y: 0, z: 48}
 --- !u!1001 &1676109570
@@ -1015,7 +1015,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offsetAmount: 1
-  offsetSpeed: 30
+  offsetSpeed: 3
   BackTrigger: {x: 0, y: 0, z: 192}
   SpawnPoint: {x: 0, y: 0, z: 48}
 --- !u!1 &2145329258
