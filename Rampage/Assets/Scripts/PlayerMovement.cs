@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEditor.Rendering;
 using UnityEngine;
 
@@ -8,18 +9,22 @@ public class PlayerMovement : MonoBehaviour
 {
     private Animator playerAnimator;
     private CharacterController cc;
+    private Quaternion targetRotation;
 
-    [SerializeField] private float runningSpeed = 2f;
-    [SerializeField] private float rotatingSpeed = 2f;
-
+    [SerializeField] private float moveSpeed = 1f;
+    [SerializeField] private float rotateSpeed = 10f;
+    [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float offsetAmount = 0.5f;
     [SerializeField] private int offsetSpeed = 3;
 
+
+    private Vector3 moveDirection;
+    private float rotationTimer = 0f;
     void Start()
     {
         cc = GetComponent<CharacterController>();
         playerAnimator = GetComponentInChildren<Animator>();
-        Debug.Log("Animator Found");
+
     }
 
     private bool isRunning()
@@ -42,7 +47,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + offsetAmount * (offsetSpeed * Time.deltaTime));
+        //Constantly moving player backwards to match the floor's speed
+        Vector3 playerOffset = Vector3.forward * offsetSpeed * Time.deltaTime;
+        //cc.Move(playerOffset);
 
         if (isRunning())
         {
@@ -60,16 +67,13 @@ public class PlayerMovement : MonoBehaviour
         {
             playerAnimator.SetBool("isNotRunning", false);
         }
+
+
+        Move();
     }
 
     private void Move()
     {
-        transform.Rotate(0, Input.GetAxis("Horizontal") * rotatingSpeed, 0);
-        Vector3 moveDirection = transform.TransformDirection(Vector3.forward);
-        float curSpeed = runningSpeed * Input.GetAxis("Vertical");
-        if (isRunning())
-        {
-            cc.SimpleMove(moveDirection * curSpeed);
-        }
+
     }
 }
