@@ -13,13 +13,13 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float rotateSpeed = 10f;
-    [SerializeField] private float gravity = -9.81f;
+    [SerializeField] private float driftTime =0.5f;
     [SerializeField] private float offsetAmount = 0.5f;
     [SerializeField] private int offsetSpeed = 3;
 
-
     private Vector3 moveDirection;
     private float rotationTimer = 0f;
+
     void Start()
     {
         cc = GetComponent<CharacterController>();
@@ -27,53 +27,41 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    private bool isRunning()
-    {
-        if (Input.GetAxis("Vertical") > 0)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    private bool isNotRunning()
-    {
-        if (Input.GetAxis("Vertical") == 0)
-        {
-            return true;
-        }
-        return false;
-    }
-
     void Update()
     {
-        //Constantly moving player backwards to match the floor's speed
+        //Constantly move player backwards to match the floor's speed
         Vector3 playerOffset = Vector3.forward * offsetSpeed * Time.deltaTime;
-        //cc.Move(playerOffset);
-
-        if (isRunning())
-        {
-            playerAnimator.SetBool("isRunning", true);
-        }
-        else
-        {
-            playerAnimator.SetBool("isRunning", false);
-        }
-        if (isNotRunning())
-        {
-            playerAnimator.SetBool("isNotRunning", true);
-        }
-        else
-        {
-            playerAnimator.SetBool("isNotRunning", false);
-        }
-
+        cc.Move(playerOffset);
 
         Move();
     }
 
     private void Move()
-    {
+    {   
+        //Get Player Input
+        float verticalInput = Input.GetAxis("Vertical");
+        float horizontalInput = Input.GetAxis("Horizontal");
 
+        //Move the player
+        Vector3 moveDirection = new Vector3(horizontalInput, 0, verticalInput);
+        cc.SimpleMove(-moveDirection * moveSpeed);
+
+        //Rotate the player
+        if (moveDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation , rotateSpeed);
+        }
+
+        //Trigger Animation
+        if(moveDirection != Vector3.zero)
+        {
+            playerAnimator.SetBool("isRunning", true);
+        }
+        else playerAnimator.SetBool("isRunning", false);
+
+        //checking velocity
+        //Debug.Log(cc.velocity);
     }
+
 }
