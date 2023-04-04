@@ -11,14 +11,15 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController cc;
     private Quaternion targetRotation;
 
+    [Header("Character Movement Stats")]
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float rotateSpeed = 10f;
-    [SerializeField] private float driftTime =0.5f;
-    [SerializeField] private float offsetAmount = 0.5f;
-    [SerializeField] private int offsetSpeed = 3;
+
+
+    //[SerializeField] private float offsetAmount = 0.5f;
+    //[SerializeField] private int offsetSpeed = 3;
 
     private Vector3 moveDirection;
-    private float rotationTimer = 0f;
 
     void Start()
     {
@@ -30,8 +31,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //Constantly move player backwards to match the floor's speed
-        Vector3 playerOffset = Vector3.forward * offsetSpeed * Time.deltaTime;
-        cc.Move(playerOffset);
+        //Vector3 playerOffset = Vector3.forward * offsetSpeed * Time.deltaTime;
+        //cc.Move(playerOffset);
 
         Move();
     }
@@ -43,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
 
         //Move the player
-        Vector3 moveDirection = new Vector3(horizontalInput, 0, verticalInput);
+        Vector3 moveDirection = new Vector3(horizontalInput, 0, verticalInput).normalized;
         cc.SimpleMove(-moveDirection * moveSpeed);
 
         //Rotate the player
