@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,14 +12,19 @@ public class LevelPooling : MonoBehaviour
     private int offsetAmount = -48;
     private int chunkCounter = 1;
 
+    [SerializeField] private Camera myCamera;
+    CameraManager myCameraManager;
+
     [Header ("Level Prefabs and Triggers")]
     [SerializeField] private GameObject[] levelPrefabs;
     [SerializeField] private Transform levelParent;
-    [SerializeField] private Vector3 BackTrigger;
-    [SerializeField] private Vector3 SpawnPoint;
 
     private void Start()
     {
+        myCameraManager = myCamera.GetComponent<CameraManager>();
+        myCameraManager.OnSpacePressed += testing;
+
+
         initialPosition = new Vector3(0, 0, 96);
         spawnPosition = initialPosition;
         foreach (var levelPrefab in levelPrefabs)
@@ -29,5 +35,10 @@ public class LevelPooling : MonoBehaviour
             parent.transform.SetParent(levelParent);
         }
 
+    }
+
+    void testing(object sender, EventArgs e)
+    {
+        Debug.Log("Space!");
     }
 }
