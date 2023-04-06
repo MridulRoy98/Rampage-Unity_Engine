@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
 using UnityEngine.SceneManagement;
 
 public class LevelPooling : MonoBehaviour
@@ -12,6 +9,7 @@ public class LevelPooling : MonoBehaviour
     private int offsetAmount = -48;
     private int chunkCounter = 1;
 
+    // Main Camera object and Script
     [SerializeField] private Camera myCamera;
     CameraManager myCameraManager;
 
@@ -21,12 +19,14 @@ public class LevelPooling : MonoBehaviour
 
     private void Start()
     {
+        //Subscribe to the event published by CameraManager
         myCameraManager = myCamera.GetComponent<CameraManager>();
-        myCameraManager.OnSpacePressed += testing;
+        myCameraManager.OnTriggerPoint += testing;
 
-
+        //Spawn first three levels
         initialPosition = new Vector3(0, 0, 96);
         spawnPosition = initialPosition;
+
         foreach (var levelPrefab in levelPrefabs)
         {
             GameObject parent = Instantiate(levelPrefab, spawnPosition, Quaternion.identity);
@@ -37,8 +37,8 @@ public class LevelPooling : MonoBehaviour
 
     }
 
-    void testing(object sender, EventArgs e)
+    private void testing(object sender, EventArgs e)
     {
-        Debug.Log("Space!");
+        Debug.Log("Triggered");
     }
 }

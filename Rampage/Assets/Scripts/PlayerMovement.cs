@@ -9,15 +9,10 @@ public class PlayerMovement : MonoBehaviour
 {
     private Animator playerAnimator;
     private CharacterController cc;
-    private Quaternion targetRotation;
 
     [Header("Character Movement Stats")]
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float rotateSpeed = 10f;
-
-
-    //[SerializeField] private float offsetAmount = 0.5f;
-    //[SerializeField] private int offsetSpeed = 3;
 
     private Vector3 moveDirection;
 
@@ -30,10 +25,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        //Constantly move player backwards to match the floor's speed
-        //Vector3 playerOffset = Vector3.forward * offsetSpeed * Time.deltaTime;
-        //cc.Move(playerOffset);
-
         Move();
     }
 
@@ -60,9 +51,6 @@ public class PlayerMovement : MonoBehaviour
             playerAnimator.SetBool("isRunning", true);
         }
         else playerAnimator.SetBool("isRunning", false);
-
-        //checking velocity
-        //Debug.Log(cc.velocity);
     }
 
 }
