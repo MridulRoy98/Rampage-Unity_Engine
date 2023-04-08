@@ -8,13 +8,22 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private int offsetSpeed = 3;
     [SerializeField] private Vector3 cameraOffset;
 
-    private float initialTriggerPosition = 144;
-    private int difference = 48;
-    private int multiplier = 1;
-    private float targetCameraZPosition;
+    public event EventHandler <OnTriggerPointEventArgs> OnTriggerPoint;
+    private float initialTriggerPosition;
+    private int difference;
+    private int multiplier;
 
-    public event EventHandler OnTriggerPoint;
+    public class OnTriggerPointEventArgs : EventArgs
+    {
+        public int numberOfTrigger;
+    }
 
+    private void Start()
+    {
+        initialTriggerPosition = 144;
+        difference = 48;
+        multiplier = 1;
+    }
     private void Update()
     {
         //Constantly move camera forward
@@ -27,7 +36,7 @@ public class CameraManager : MonoBehaviour
     {
         if (transform.position.z <= initialTriggerPosition - difference * multiplier)
         {
-            OnTriggerPoint?.Invoke(this, EventArgs.Empty);
+            OnTriggerPoint?.Invoke(this, new OnTriggerPointEventArgs { numberOfTrigger = multiplier });
             multiplier++;
         }
     }
