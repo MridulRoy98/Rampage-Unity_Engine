@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-
+using Random = UnityEngine.Random;
 public class LevelPooling : MonoBehaviour
 {
     private Vector3 initialPosition;
@@ -38,23 +35,38 @@ public class LevelPooling : MonoBehaviour
 
         foreach (var levelPrefab in levelPrefabs)
         {
-            //Spawn prefabs in scene maintaining offset
-            GameObject level = Instantiate(levelPrefab, spawnPosition, Quaternion.identity);
-            spawnPosition = new Vector3(0, 0, initialPosition.z + offsetAmount * chunkCounter);
-            chunkCounter++;
-
-            //Add the instantiated prefabs to another array to destroy later
-            spawnedLevels[spawnCount] = level;
-            spawnCount++;
-
-            //Making the levels child of another GameObject
-            level.transform.SetParent(levelParent);
+            CreateNewLevel();
         }
     }
 
+    private void CreateNewLevel()
+    {
+        GameObject newLevel = Instantiate(levelPrefabs[Random.Range(0, levelPrefabs.Length)], spawnPosition, Quaternion.identity);
+        spawnPosition = new Vector3(0, 0, initialPosition.z + offsetAmount * chunkCounter);
+        chunkCounter++;
+        spawnCount++;
+
+        newLevel.transform.SetParent(levelParent);
+        AddToArray(newLevel);
+    }
+
+    //Called when event triggered by Camera
     private void DestroyLevel(object sender, CameraManager.OnTriggerPointEventArgs e)
     {
         Debug.Log("Triggered");
-        Destroy(spawnedLevels[e.numberOfTrigger - 1]);
+        RemoveFromArray(e.numberOfTrigger);
     }
+
+    private void AddToArray(GameObject newLevel)
+    {
+        spawnedLevels[spawnCount] = newLevel;
+    }
+    private void RemoveFromArray(int index)
+    {
+        Destroy(spawnedLevels[index - 1]);
+        CreateNewLevel();
+        myCameraManager.OnTriggerPoint -= DestroyLevel;
+    }
+
+
 }
