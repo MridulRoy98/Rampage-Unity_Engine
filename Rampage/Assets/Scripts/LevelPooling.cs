@@ -23,10 +23,10 @@ public class LevelPooling : MonoBehaviour
     {
         //Subscribe to the event published by CameraManager
         myCameraManager = myCamera.GetComponent<CameraManager>();
-        myCameraManager.OnTriggerPoint += DestroyLevel;
+        myCameraManager.OnTriggerPoint += LevelRegenSystem;
 
         //Spawn details
-        spawnedLevels = new GameObject[3];
+        spawnedLevels = new GameObject[10];
         initialPosition = new Vector3(0, 0, 96);
         spawnPosition = initialPosition;
         offsetAmount = -48;
@@ -39,6 +39,8 @@ public class LevelPooling : MonoBehaviour
         }
     }
 
+
+    //Creating level in the front
     private void CreateNewLevel()
     {
         GameObject newLevel = Instantiate(levelPrefabs[Random.Range(0, levelPrefabs.Length)], spawnPosition, Quaternion.identity);
@@ -49,26 +51,19 @@ public class LevelPooling : MonoBehaviour
 
         spawnedLevels[spawnCount] = newLevel;
         spawnCount++;
-
-        
     }
 
-    //Called when event triggered by Camera
-    private void DestroyLevel(object sender, CameraManager.OnTriggerPointEventArgs e)
-    {
-        Debug.Log("Triggered");
-        RemoveFromArray(e.triggerCount - 1);
-
-        Instantiate(levelPrefabs[Random.Range(0, levelPrefabs.Length)], spawnPosition, Quaternion.identity);
-        spawnPosition = new Vector3(0, 0, initialPosition.z + offsetAmount * offsetMultiplier);
-        offsetMultiplier++;
-
-
-    }
-    private void RemoveFromArray(int index)
+    //Deleting the level in the back
+    private void DestroyOldLevel(int index)
     {
         Destroy(spawnedLevels[index]);
     }
 
 
+    //Called when event triggered by Camera
+    private void LevelRegenSystem(object sender, CameraManager.OnTriggerPointEventArgs e)
+    {
+        DestroyOldLevel(e.triggerCount-1);
+        CreateNewLevel();
+    }
 }
