@@ -12,10 +12,11 @@ public class CameraManager : MonoBehaviour
     private float initialTriggerPosition;
     private int difference;
     private int multiplier;
+    private bool hasTriggered = false;
 
     public class OnTriggerPointEventArgs : EventArgs
     {
-        public int numberOfTrigger;
+        public int triggerCount;
     }
 
     private void Start()
@@ -34,11 +35,16 @@ public class CameraManager : MonoBehaviour
     //Publish event when camera is far enough to destroy previously spawned platform
     private void CameraTrigger()
     {
-        if (transform.position.z <= initialTriggerPosition - difference * multiplier)
+        if (!hasTriggered && transform.position.z <= initialTriggerPosition - difference * multiplier)
         {
-            OnTriggerPoint?.Invoke(this, new OnTriggerPointEventArgs { numberOfTrigger = multiplier });
+            OnTriggerPoint?.Invoke(this, new OnTriggerPointEventArgs { triggerCount = multiplier });
             multiplier++;
+            hasTriggered = true;
+        }
+        if (hasTriggered && transform.position.z <= initialTriggerPosition - difference * multiplier+5)
+        {
+            hasTriggered = false;
         }
     }
-
 }
+//
