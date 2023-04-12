@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientGroundColor: {r: 0.64705884, g: 0.44506627, b: 0.26167822, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 4
+  m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
@@ -2435,6 +2435,7 @@ MonoBehaviour:
   - {fileID: 122202439983761260, guid: 8681dc8ccd8d15145b1630ad5cc90ffa, type: 3}
   - {fileID: 122202439983761260, guid: 04a53a3d4897b8c48921b8426e6d9c62, type: 3}
   levelParent: {fileID: 830277882}
+  spawnedLevels: []
 --- !u!1 &1277486640
 GameObject:
   m_ObjectHideFlags: 0
@@ -2718,7 +2719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2.8
-  rotateSpeed: 15
+  rotateSpeed: 9.5
 --- !u!1 &1298963701
 GameObject:
   m_ObjectHideFlags: 0
