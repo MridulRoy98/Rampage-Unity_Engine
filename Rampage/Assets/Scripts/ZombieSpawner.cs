@@ -1,18 +1,18 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ZombieSpawner : MonoBehaviour
 {
     [SerializeField] private List<GameObject> zombies;
-    [SerializeField] private GameObject spawnLocation;
-
 
     private void Start()
     {
-        for (int i = 0; i < zombies.Count; i++)
-        {
+        SpawnZombies();
+    }
 
-        }
+    private void SpawnZombies()
+    {
+        int randomIndex = Random.Range(0, zombies.Count);
+        Instantiate(zombies[randomIndex], this.transform.position, Quaternion.identity);
     }
 }

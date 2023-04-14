@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7282458427673483148}
+  - component: {fileID: 8787433884240269130}
   m_Layer: 0
   m_Name: ZombieSpawnPoint
   m_TagString: Untagged
@@ -31,3 +32,67 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8787433884240269130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8502408354193543091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 617e24b3c3d755043a8be7998c968dce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zombies:
+  - {fileID: 1418193975600942, guid: 2165f6a67f710bc47a7cfc0882e7e964, type: 3}
+  - {fileID: 1164828658887116, guid: 6cb63163261c5a84a8a7410cf0775135, type: 3}
+  - {fileID: 1379516714727752, guid: cecba8cbb65991c42a1e7219f8210b9a, type: 3}
+  - {fileID: 1017123011376438, guid: 720442d4dd381894b83efa1d1068d5e7, type: 3}
+  - {fileID: 1743311549795642, guid: 9acbd885df2760d41adcea6334790a96, type: 3}
+  - {fileID: 1767653040776728, guid: 0e2c74548f9e2284aa68e9dc8544219c, type: 3}
+  - {fileID: 1713425991072746, guid: 645f5e2b8327af9439e12e9a4222c5c8, type: 3}
+  - {fileID: 1343261146546640, guid: 4003093fe4a231c4d9c155a6540ec590, type: 3}
+  - {fileID: 1055470696967520, guid: bb116383f6f80bf4d90cb48aeca8e8bf, type: 3}
+  - {fileID: 1967962345597456, guid: 5c839ac340cbdb44983d2d5b689eb849, type: 3}
+  - {fileID: 1442989148144956, guid: d04ae7ac97d4d1348887e36a18d950cc, type: 3}
+  - {fileID: 1763636191463442, guid: c14250d47b6dfbd448ee47b3fd98d89f, type: 3}
+  - {fileID: 1639909596336042, guid: 2bce6f5837b77684b98b6c0116612065, type: 3}
+  - {fileID: 1686375517816074, guid: 08eb0c5855619374381691dec1799669, type: 3}
+  - {fileID: 1991497748344218, guid: d2d71fc434431f041b20cef2182d5c3e, type: 3}
+  - {fileID: 1616105819863738, guid: 7cb0205c5f7aeba45b91883f9425fcab, type: 3}
+  - {fileID: 1916796579201672, guid: 5de68a7f859a40a47bf17802c25007c3, type: 3}
+  - {fileID: 1926169282971916, guid: 95aa9f8add096f44abec3dd0a8e6d79c, type: 3}
+  - {fileID: 1763724247660962, guid: 5090368b8e8213146ba1934c73da6149, type: 3}
+  - {fileID: 1134484993998496, guid: da241a1c1c2f4b344926c84ef25128ac, type: 3}
+  - {fileID: 1785411793677078, guid: 4bcf20765be80ca43a7cfa0cc4f61d82, type: 3}
+  - {fileID: 1805611043755482, guid: fe2234a2aed6c504ab0c225d7e1a1cc6, type: 3}
+  - {fileID: 1454428107089030, guid: b1b874e26e62db949baeec17a89ca9eb, type: 3}
+  - {fileID: 1820573889300922, guid: af43738424059df46a83c566c110013d, type: 3}
+  - {fileID: 1115666180268534, guid: 15fa57f984877cc4f9acd0e63babc93e, type: 3}
+  - {fileID: 1865598692286518, guid: c07ec1075acf8bc42a7f0ef5e239291d, type: 3}
+  - {fileID: 1581986130515946, guid: 3c17e5f77af5ac54d991cf6c5d87082b, type: 3}
+  - {fileID: 1535602455685992, guid: ff2cafa10adeb4b43ab64ebe754ad3d7, type: 3}
+  - {fileID: 1562126803887444, guid: e05321c6e6ad7b845942de92aafc2395, type: 3}
+  - {fileID: 1160577204630336, guid: 7c521770c9e780444b9b27cb7183739f, type: 3}
+  - {fileID: 1124521317761058, guid: 4b114aae8ad29e34cb3c0117ad7edbd2, type: 3}
+  - {fileID: 1275266672632250, guid: 307d9d29af4880045b27ca9862422012, type: 3}
+  - {fileID: 1456145000865774, guid: 8d862076c59fabf43b7ca2084f63226f, type: 3}
+  - {fileID: 1172417875531008, guid: 046d682af511f1843bac35bbeb55eecc, type: 3}
+  - {fileID: 1922703142909278, guid: 3ba6740ea34059446b2030cb1cee74bc, type: 3}
+  - {fileID: 1075024190843592, guid: ea757c1578e17134b85ac65be02c4b19, type: 3}
+  - {fileID: 1448682853809946, guid: fd7713efca146e545aafa284b89a051e, type: 3}
+  - {fileID: 1876492869514370, guid: eb1c725db5a403a40bd409a9bea29cb4, type: 3}
+  - {fileID: 1841375738481322, guid: 0439985487c8b4342909dcf09068091b, type: 3}
+  - {fileID: 1069217425750644, guid: 83620e573d3f2254199cd946a8601720, type: 3}
+  - {fileID: 1849257013590008, guid: 478b9cfcbcdb7284bbea515d7f42ea18, type: 3}
+  - {fileID: 1105650277993242, guid: 77ee7dbaf71e1664fa6fb7b0b13d05a0, type: 3}
+  - {fileID: 1877525456610922, guid: b7a521fe7dabb734a87b288a49e9b68b, type: 3}
+  - {fileID: 1918804341386412, guid: 3b53e862d7e73954ea2e8f07c55cec60, type: 3}
+  - {fileID: 1775642029970670, guid: 99ea6e59b7824a449888100eea3984a3, type: 3}
+  - {fileID: 1055338902904486, guid: e0e167f92e65a254da5ef2b62ad5e710, type: 3}
+  - {fileID: 1186368985647942, guid: f91c7ce3a32256e4eb15f8b3e6191a7c, type: 3}
+  - {fileID: 1229489993529932, guid: 56339bb877068954cbd9a6c3bacb4826, type: 3}
+  - {fileID: 1111558404630960, guid: d6d9d31ece8da534098c0e9337b9708a, type: 3}
+  - {fileID: 1965423065467750, guid: 46e3fad9d63edad4e95366d675950f78, type: 3}
+  spawnLocation: {fileID: 0}
