@@ -1,6 +1,11 @@
 using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using UnityEngine.AI;
+using JetBrains.Annotations;
+using System.Runtime.CompilerServices;
+using Unity.AI.Navigation;
+
 public class LevelPooling : MonoBehaviour
 {
     private Vector3 initialPosition;
@@ -18,7 +23,8 @@ public class LevelPooling : MonoBehaviour
     [SerializeField] private Transform levelParent;
     [SerializeField] private GameObject[] spawnedLevels;
 
-    
+    [SerializeField] private NavMeshSurface surface;
+
     private void Start()
     {
         //Subscribe to the event published by CameraManager
@@ -37,6 +43,7 @@ public class LevelPooling : MonoBehaviour
         {
             CreateNewLevel();
         }
+        surface.BuildNavMesh();
     }
 
 

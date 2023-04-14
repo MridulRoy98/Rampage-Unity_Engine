@@ -2436,6 +2436,7 @@ MonoBehaviour:
   - {fileID: 122202439983761260, guid: 04a53a3d4897b8c48921b8426e6d9c62, type: 3}
   levelParent: {fileID: 830277882}
   spawnedLevels: []
+  surface: {fileID: 3110716800326459513, guid: 557b24cd9515ad949818d32e575a5d8e, type: 3}
 --- !u!1 &1277486640
 GameObject:
   m_ObjectHideFlags: 0

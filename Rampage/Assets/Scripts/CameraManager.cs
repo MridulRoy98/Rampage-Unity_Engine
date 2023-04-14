@@ -41,6 +41,7 @@ public class CameraManager : MonoBehaviour
             multiplier++;
             hasTriggered = true;
         }
+
         if (hasTriggered && transform.position.z <= initialTriggerPosition - difference * multiplier+5)
         {
             hasTriggered = false;
