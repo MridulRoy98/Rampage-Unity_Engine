@@ -95,4 +95,5 @@ MonoBehaviour:
   - {fileID: 1229489993529932, guid: 56339bb877068954cbd9a6c3bacb4826, type: 3}
   - {fileID: 1111558404630960, guid: d6d9d31ece8da534098c0e9337b9708a, type: 3}
   - {fileID: 1965423065467750, guid: 46e3fad9d63edad4e95366d675950f78, type: 3}
-  spawnLocation: {fileID: 0}
+  spawned: []
+  player: {fileID: 727822792517664989, guid: 84d1c093b5abf9641b99a1fb7375736b, type: 3}
