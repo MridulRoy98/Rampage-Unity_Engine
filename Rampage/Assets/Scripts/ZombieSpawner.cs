@@ -5,14 +5,14 @@ using UnityEngine;
 public class ZombieSpawner : MonoBehaviour
 {
     [SerializeField] private List<GameObject> zombies;
-    [SerializeField] private List<GameObject> spawnLocations;
+    [SerializeField] private GameObject spawnLocation;
 
 
     private void Start()
     {
-        //foreach (var location in spawnLocations)
-        //{
-        //    Instantiate(zombies[Random.Range(0, zombies.Count)], location.transform.position, Quaternion.identity);
-        //}
+        for (int i = 0; i < zombies.Count; i++)
+        {
+
+        }
     }
 }
