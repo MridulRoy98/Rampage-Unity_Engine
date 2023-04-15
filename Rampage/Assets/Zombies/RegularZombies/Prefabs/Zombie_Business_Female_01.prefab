@@ -6934,6 +6934,7 @@ GameObject:
   - component: {fileID: 4172217394993850}
   - component: {fileID: 95466007142672090}
   - component: {fileID: 4469719942170269430}
+  - component: {fileID: -4130721832257346657}
   m_Layer: 0
   m_Name: Zombie_Business_Female_01
   m_TagString: Untagged
@@ -7036,19 +7037,32 @@ NavMeshAgent:
   m_GameObject: {fileID: 1743311549795642}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Radius: 0.7
+  m_Speed: 32.3
+  m_Acceleration: 10
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_AngularSpeed: 20
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
-  m_AutoRepath: 1
+  m_AutoRepath: 0
   m_Height: 2
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-4130721832257346657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743311549795642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43685bf30079f704493f297dd3fe097c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!1 &1745741715308508
 GameObject:
   m_ObjectHideFlags: 0

@@ -47,4 +47,8 @@ public class PlayerMovement : MonoBehaviour
         else playerAnimator.SetBool("isRunning", false);
     }
 
+    public Vector3 GetPlayerPosition()
+    {
+        return transform.position;
+    }
 }
