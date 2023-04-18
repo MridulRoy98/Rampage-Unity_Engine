@@ -5764,6 +5764,7 @@ GameObject:
   - component: {fileID: 95007688899494760}
   - component: {fileID: -1167767926853125875}
   - component: {fileID: -2548933406867464132}
+  - component: {fileID: 8237882057186194445}
   m_Layer: 0
   m_Name: Zombie_FastfoodWorker_Male_01
   m_TagString: Untagged
@@ -5866,19 +5867,19 @@ NavMeshAgent:
   m_GameObject: {fileID: 1639909596336042}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.6
-  m_Speed: 1
-  m_Acceleration: 10
+  m_Radius: 0.5
+  m_Speed: 0.5
+  m_Acceleration: 2
   avoidancePriority: 50
-  m_AngularSpeed: 10
-  m_StoppingDistance: 5
+  m_AngularSpeed: 50
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
-  m_AutoRepath: 1
+  m_AutoRepath: 0
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 1
-  m_ObstacleAvoidanceType: 3
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &-2548933406867464132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5894,6 +5895,20 @@ MonoBehaviour:
   player: {fileID: 0}
   navmeshSurface: {fileID: 5659968097447665171, guid: 557b24cd9515ad949818d32e575a5d8e,
     type: 3}
+--- !u!136 &8237882057186194445
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639909596336042}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.23
+  m_Height: 1.8646877
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9325832, z: 0}
 --- !u!1 &1655093374869990
 GameObject:
   m_ObjectHideFlags: 0

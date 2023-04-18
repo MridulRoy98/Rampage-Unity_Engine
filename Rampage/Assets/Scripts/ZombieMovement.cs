@@ -22,18 +22,46 @@ public class ZombieMovement : MonoBehaviour
         zombieAnimator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         surface = navmeshSurface.GetComponent<NavMeshSurface>();
+        chasingAnimation();
+        agent.speed = Random.Range(0.2f, 0.6f);
     }
     void Update()
     {
-        FollowPlayer();
+        AttackAnimation();
     }
     private void FollowPlayer()
     {
         agent.SetDestination(playermovement.GetPlayerPosition());
-        //Debug.Log();
-        //Vector3 lookDirection = playermovement.GetPlayerPosition() - transform.position;
-        //Quaternion targetRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        Vector3 lookDirection = playermovement.GetPlayerPosition() - transform.position;
+        Quaternion targetRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    }
+
+    private void AttackAnimation()
+    {
+        float distance = Vector3.Distance(playermovement.GetPlayerPosition(), transform.position);
+        if (distance < 1.5f)
+        {
+            zombieAnimator.SetBool("zombie_attack", true);
+            Debug.Log(distance);
+            //int animNumber = Random.Range(0, 2);
+            //switch (animNumber)
+            //{
+            //    case 0:
+            //        zombieAnimator.SetBool("zombie_attack", true);
+            //        break;
+            //    case 1:
+            //        zombieAnimator.SetBool("zombie_neckbite", true);
+            //        break;
+            //}
+            
+        }
+        else
+        {
+            zombieAnimator.SetBool("zombie_attack", false);
+            //zombieAnimator.SetBool("zombie_neckbite", false);
+            FollowPlayer();
+        }
     }
     private void chasingAnimation()
     {
