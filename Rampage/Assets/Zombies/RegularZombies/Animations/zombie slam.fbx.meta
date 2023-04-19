@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 94431d337b9378f45b4b761aa749c61b
+guid: c8148b106fbe61446b48b8c2deb9ec59
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Zombie_Attack
+      name: zombie_slam
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 79
+      lastFrame: 138
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
