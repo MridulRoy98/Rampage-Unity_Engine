@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 4935331100389594442}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 6.8293076, y: 1.6168267, z: 8.899041}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0.53246}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -47,8 +47,8 @@ MonoBehaviour:
   m_AgentTypeID: 0
   m_StartPoint: {x: 0, y: 0, z: -1.2505326}
   m_EndPoint: {x: 0, y: 0, z: 2.5}
-  m_Width: 12.303799
-  m_CostModifier: -1
+  m_Width: 3.8741283
+  m_CostModifier: 1
   m_Bidirectional: 1
   m_AutoUpdatePosition: 1
   m_Area: 0

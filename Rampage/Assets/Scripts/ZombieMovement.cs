@@ -1,4 +1,5 @@
 using Unity.AI.Navigation;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,21 +13,24 @@ public class ZombieMovement : MonoBehaviour
     private float rotationSpeed = 1f;
     public GameObject navmeshSurface;
     private NavMeshSurface surface;
+
+    private bool canMove;
+
     private void Awake()
     {
         player = GameObject.Find("Character");
         playermovement = player.GetComponent<PlayerMovement>();
-    }
-    void Start()
-    {
         zombieAnimator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         surface = navmeshSurface.GetComponent<NavMeshSurface>();
-        chasingAnimation();
+    }
+    void Start()
+    {
+        canMove = true;
     }
     void Update()
     {
-        Attack();
+        FollowPlayer();
     }
     private void FollowPlayer()
     {
@@ -34,67 +38,70 @@ public class ZombieMovement : MonoBehaviour
         Vector3 lookDirection = playermovement.GetPlayerPosition() - transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+        if (agent.isOnOffMeshLink)
+        {
+            agent.speed = 0f;
+        }
+
+        chasingAnimation();
     }
 
-    private void Attack()
-    {
-        float distance = Vector3.Distance(playermovement.GetPlayerPosition(), transform.position);
-        if (distance < 1.2f)
-        {
-            int animNumber = Random.Range(0, 2);
-            switch (animNumber)
-            {
-                case 0:
-                    zombieAnimator.SetBool("zombie_attack", true);
-                    break;
-                case 1:
-                    zombieAnimator.SetBool("zombie_slam", true);
-                    break;
-            }
+    //private void Attack()
+    //{
+    //    float distance = Vector3.Distance(playermovement.GetPlayerPosition(), transform.position);
+    //    if (distance < 1.2f)
+    //    {
+    //        agent.speed = 0;
+    //        int animNumber = Random.Range(0, 2);
+    //        switch (animNumber)
+    //        {
+    //            case 0:
+    //                zombieAnimator.SetBool("zombie_attack", true);
+    //                break;
 
+    //            case 1:
+    //                zombieAnimator.SetBool("zombie_slam", true);
+    //                break;
+    //        }
+    //        canMove = false;
+    //    }
+    //    else
+    //    {
+    //        zombieAnimator.SetBool("zombie_attack", false);
+    //        zombieAnimator.SetBool("zombie_slam", false);
+    //        canMove = true;
+    //    }
+    //}
+    private void chasingAnimation()
+    {
+        int animNumber = Random.Range(0, 4);
+
+        if(animNumber == 1)
+        {
+            zombieAnimator.SetBool("zombie_walk", true);
+        }
+        else if(animNumber == 2)
+        {
+            zombieAnimator.SetBool("zombie_run", true);
         }
         else
         {
-            zombieAnimator.SetBool("zombie_attack", false);
-            zombieAnimator.SetBool("zombie_slam", false);
-            chasingAnimation();
+            zombieAnimator.SetBool("zombie_crawl", true);
         }
-    }
-    private void chasingAnimation()
-    {
-        int animNumber = Random.Range(0, 3);
 
-        switch (animNumber)
+        if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Walk"))
         {
-            //Walking
-            case 0:
-                agent.speed = 0.5f;
-                zombieAnimator.SetBool("zombie_walk", true);
-                zombieAnimator.SetBool("zombie_crawl", false);
-                zombieAnimator.SetBool("zombie_run", false);
-                FollowPlayer();
-                break;
-
-            //Running
-            case 1:
-                agent.speed = 2.8f;
-                zombieAnimator.SetBool("zombie_walk", false);
-                zombieAnimator.SetBool("zombie_crawl", false);
-                zombieAnimator.SetBool("zombie_run", true);
-                FollowPlayer();
-                break;
-
-            //Crawling
-            case 2:
-                agent.speed = 3f;
-                zombieAnimator.SetBool("zombie_walk", false);
-                zombieAnimator.SetBool("zombie_crawl", true);
-                zombieAnimator.SetBool("zombie_run", false);
-                FollowPlayer();
-                break;
+            Debug.Log("here");
+            agent.speed = 1f;
         }
-
+        else if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Run"))
+        {
+            agent.speed = Random.Range(1.4f, 1.6f);
+        }
+        else if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Crawl"))
+        {
+            agent.speed = Random.Range(2.8f, 3f);
+        }
     }
-
-
 }
