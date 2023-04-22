@@ -24,64 +24,63 @@ public class ZombieMovement : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         surface = navmeshSurface.GetComponent<NavMeshSurface>();
     }
-    void Start()
-    {
-        canMove = true;
-    }
     void Update()
     {
-        FollowPlayer();
+        CanThePlayerMove();
+        if (CanThePlayerMove())
+        {
+            FollowPlayer();
+        }
+        else
+        {
+            Attack();
+        }
+    }
+
+    private bool CanThePlayerMove()
+    {
+        float distance = Vector3.Distance(transform.position, playermovement.GetPlayerPosition());
+        if (distance > 1f)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     private void FollowPlayer()
     {
-        agent.SetDestination(playermovement.GetPlayerPosition());
-        Vector3 lookDirection = playermovement.GetPlayerPosition() - transform.position;
-        Quaternion targetRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-        if (agent.isOnOffMeshLink)
-        {
-            agent.speed = 0f;
-        }
-
-        chasingAnimation();
+            agent.SetDestination(playermovement.GetPlayerPosition());
+            Vector3 lookDirection = playermovement.GetPlayerPosition() - transform.position;
+            Quaternion targetRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            chasingAnimation();
     }
 
-    //private void Attack()
-    //{
-    //    float distance = Vector3.Distance(playermovement.GetPlayerPosition(), transform.position);
-    //    if (distance < 1.2f)
-    //    {
-    //        agent.speed = 0;
-    //        int animNumber = Random.Range(0, 2);
-    //        switch (animNumber)
-    //        {
-    //            case 0:
-    //                zombieAnimator.SetBool("zombie_attack", true);
-    //                break;
-
-    //            case 1:
-    //                zombieAnimator.SetBool("zombie_slam", true);
-    //                break;
-    //        }
-    //        canMove = false;
-    //    }
-    //    else
-    //    {
-    //        zombieAnimator.SetBool("zombie_attack", false);
-    //        zombieAnimator.SetBool("zombie_slam", false);
-    //        canMove = true;
-    //    }
-    //}
+    private void Attack()
+    {
+        int animNumber = Random.Range(0, 2);
+        switch (animNumber)
+        {
+            case 0:
+                zombieAnimator.SetBool("zombie_attack", true);
+                break;
+                
+            case 1:
+                zombieAnimator.SetBool("zombie_slam", true);
+                break;
+        }
+    }
     private void chasingAnimation()
     {
-        int animNumber = Random.Range(0, 4);
+        int animNumber = Random.Range(0, 3);
 
-        if(animNumber == 1)
+        if(animNumber == 0)
         {
             zombieAnimator.SetBool("zombie_walk", true);
         }
-        else if(animNumber == 2)
+        else if(animNumber == 1)
         {
             zombieAnimator.SetBool("zombie_run", true);
         }
@@ -92,7 +91,6 @@ public class ZombieMovement : MonoBehaviour
 
         if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Walk"))
         {
-            Debug.Log("here");
             agent.speed = 1f;
         }
         else if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Run"))
