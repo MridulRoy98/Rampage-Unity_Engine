@@ -22,6 +22,10 @@ public class PlayerMovement : MonoBehaviour
         Move();
     }
 
+    private void shootingMode()
+    {
+
+    }
     private void Move()
     {   
         //Get Player Input
