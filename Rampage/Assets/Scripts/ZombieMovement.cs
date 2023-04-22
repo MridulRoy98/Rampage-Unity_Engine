@@ -30,8 +30,10 @@ public class ZombieMovement : MonoBehaviour
         if (CanThePlayerMove())
         {
             FollowPlayer();
+            zombieAnimator.SetBool("zombie_attack", false);
+            zombieAnimator.SetBool("zombie_slam", false);
         }
-        else
+        if (!CanThePlayerMove())
         {
             Attack();
         }
@@ -46,6 +48,7 @@ public class ZombieMovement : MonoBehaviour
         }
         else
         {
+            Debug.Log("Attack");
             return false;
         }
     }
@@ -91,7 +94,7 @@ public class ZombieMovement : MonoBehaviour
 
         if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Walk"))
         {
-            agent.speed = 1f;
+            agent.speed = Random.Range(0.7f, 1f);
         }
         else if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Run"))
         {
