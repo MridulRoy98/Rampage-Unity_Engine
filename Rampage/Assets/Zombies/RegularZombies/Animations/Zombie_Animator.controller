@@ -153,7 +153,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.94186044
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -219,6 +219,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: zombie_run
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: zombie_attack
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 920072077364547967}
   m_Solo: 0
@@ -244,6 +247,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: zombie_walk
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: zombie_slam
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1425052487864085944}
   m_Solo: 0
@@ -253,7 +259,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.9456522
-  m_HasExitTime: 0
+  m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -348,6 +354,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: zombie_crawl
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: zombie_slam
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6799523564041276546}
@@ -452,6 +461,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: zombie_crawl
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: zombie_attack
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6799523564041276546}
   m_Solo: 0
@@ -501,6 +513,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: zombie_run
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: zombie_slam
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 920072077364547967}
@@ -620,6 +635,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: zombie_walk
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: zombie_attack
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1425052487864085944}
