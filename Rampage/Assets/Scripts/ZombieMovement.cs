@@ -14,7 +14,7 @@ public class ZombieMovement : MonoBehaviour
     public GameObject navmeshSurface;
     private NavMeshSurface surface;
 
-    private bool canMove;
+    private bool isChasing = false;
 
     private void Awake()
     {
@@ -26,39 +26,40 @@ public class ZombieMovement : MonoBehaviour
     }
     void Update()
     {
-        CanThePlayerMove();
-        if (CanThePlayerMove())
+        setSpeed();
+        ChaseMode();
+        if (isChasing == true)
         {
             FollowPlayer();
-            zombieAnimator.SetBool("zombie_attack", false);
-            zombieAnimator.SetBool("zombie_slam", false);
+            
         }
-        if (!CanThePlayerMove())
+        else
         {
             Attack();
         }
     }
 
-    private bool CanThePlayerMove()
+    private void ChaseMode()
     {
         float distance = Vector3.Distance(transform.position, playermovement.GetPlayerPosition());
         if (distance > 1f)
         {
-            return true;
+            zombieAnimator.SetBool("zombie_attack", false);
+            zombieAnimator.SetBool("zombie_slam", false);
+            isChasing = true;
         }
         else
         {
-            Debug.Log("Attack");
-            return false;
+            isChasing=false;
         }
     }
     private void FollowPlayer()
     {
-            agent.SetDestination(playermovement.GetPlayerPosition());
-            Vector3 lookDirection = playermovement.GetPlayerPosition() - transform.position;
-            Quaternion targetRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            chasingAnimation();
+        agent.SetDestination(playermovement.GetPlayerPosition());
+        Vector3 lookDirection = playermovement.GetPlayerPosition() - transform.position;
+        Quaternion targetRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        chasingAnimation();
     }
 
     private void Attack()
@@ -68,41 +69,53 @@ public class ZombieMovement : MonoBehaviour
         {
             case 0:
                 zombieAnimator.SetBool("zombie_attack", true);
+                isChasing = false;
                 break;
                 
             case 1:
                 zombieAnimator.SetBool("zombie_slam", true);
+                isChasing = false;
                 break;
+        }
+    }
+    private void setSpeed()
+    {
+        if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Walk"))
+        {
+            agent.speed = Random.Range(0.4f, 0.5f);
+            isChasing = true;
+        }
+        else if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Run"))
+        {
+            agent.speed = Random.Range(1.4f, 1.6f);
+            isChasing = true;
+        }
+        else if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Crawl"))
+        {
+            agent.speed = Random.Range(2.8f, 3f);
+            isChasing = true;
+        }
+        else
+        {
+            isChasing = false;
         }
     }
     private void chasingAnimation()
     {
         int animNumber = Random.Range(0, 3);
+        switch (animNumber)
+        {
+            case 0:
+                zombieAnimator.SetBool("zombie_walk", true);
+                break;
 
-        if(animNumber == 0)
-        {
-            zombieAnimator.SetBool("zombie_walk", true);
-        }
-        else if(animNumber == 1)
-        {
-            zombieAnimator.SetBool("zombie_run", true);
-        }
-        else
-        {
-            zombieAnimator.SetBool("zombie_crawl", true);
-        }
+            case 1:
+                zombieAnimator.SetBool("zombie_run", true);
+                break;
 
-        if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Walk"))
-        {
-            agent.speed = Random.Range(0.7f, 1f);
-        }
-        else if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Run"))
-        {
-            agent.speed = Random.Range(1.4f, 1.6f);
-        }
-        else if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Crawl"))
-        {
-            agent.speed = Random.Range(2.8f, 3f);
+            case 2:
+                zombieAnimator.SetBool("zombie_crawl", true);
+                break;
         }
     }
 }
