@@ -8,8 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Character Movement Stats")]
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float rotateSpeed = 10f;
-
-    private Vector3 moveDirection;
+    [SerializeField] private float detectionRadius = 5f;
 
     void Start()
     {
@@ -17,14 +16,41 @@ public class PlayerMovement : MonoBehaviour
         playerAnimator = GetComponentInChildren<Animator>();
     }
 
+    private bool isMoving()
+    {
+        if(Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
+        {
+            Debug.Log("can move");
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     void Update()
     {
-        Move();
+        if (isMoving())
+        {
+            Move();
+        }
+        else
+        {
+            playerAnimator.SetBool("isRunning", false);
+            ShootingMode();
+        }
     }
 
-    private void shootingMode()
+    private void ShootingMode()
     {
-
+        if (Physics.CheckSphere(transform.position, 5))
+        {
+            
+        }
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(transform.position, detectionRadius);
     }
     private void Move()
     {   
