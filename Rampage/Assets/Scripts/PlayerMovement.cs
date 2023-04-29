@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Character Movement Stats")]
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float rotateSpeed = 10f;
-    [SerializeField] private float detectionRadius = 5f;
 
     void Start()
     {
@@ -20,7 +19,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if(Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
         {
-            Debug.Log("can move");
             return true;
         }
         else
@@ -43,15 +41,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void ShootingMode()
     {
-        if (Physics.CheckSphere(transform.position, 5))
-        {
-            
-        }
+        
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawSphere(transform.position, detectionRadius);
-    }
+
+
     private void Move()
     {   
         //Get Player Input

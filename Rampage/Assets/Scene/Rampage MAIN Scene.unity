@@ -2462,6 +2462,7 @@ GameObject:
   - component: {fileID: 1282562248}
   - component: {fileID: 1282562249}
   - component: {fileID: 1282562251}
+  - component: {fileID: 1282562252}
   m_Layer: 0
   m_Name: Character
   m_TagString: Player
@@ -2518,7 +2519,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2.8
   rotateSpeed: 9.5
-  detectionRadius: 6
+--- !u!135 &1282562252
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282562247}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 7.42
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1298963701
 GameObject:
   m_ObjectHideFlags: 0
