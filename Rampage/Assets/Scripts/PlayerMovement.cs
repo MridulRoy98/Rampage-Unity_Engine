@@ -2,31 +2,51 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private Animator playerAnimator;
     private CharacterController cc;
 
     [Header("Character Movement Stats")]
-    
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float rotateSpeed = 10f;
-    [SerializeField] private Animator playerAnimator;
 
     void Start()
     {
         cc = GetComponent<CharacterController>();
-        //playerAnimator = GetComponent<Animator>();
+        playerAnimator = GetComponentInChildren<Animator>();
     }
 
+    private bool isMoving()
+    {
+        if(Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     void Update()
     {
-        Move();
+        if (isMoving())
+        {
+            Move();
+        }
+        else
+        {
+            playerAnimator.SetBool("isRunning", false);
+            ShootingMode();
+        }
     }
 
-    private void shootingMode()
+    private void ShootingMode()
     {
-
+        
     }
+
+
     private void Move()
-    {
+    {   
         //Get Player Input
         float verticalInput = Input.GetAxis("Vertical");
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -39,20 +59,15 @@ public class PlayerMovement : MonoBehaviour
         if (moveDirection != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation , rotateSpeed);
         }
 
         //Trigger Animation
-        if (moveDirection != Vector3.zero)
+        if(moveDirection != Vector3.zero)
         {
             playerAnimator.SetBool("isRunning", true);
-            Debug.Log("true");
         }
-        else
-        {
-            playerAnimator.SetBool("isRunning", false);
-            Debug.Log("false");
-        }
+        else playerAnimator.SetBool("isRunning", false);
     }
 
     public Vector3 GetPlayerPosition()
