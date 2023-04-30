@@ -5,12 +5,15 @@ public class PlayerMovement : MonoBehaviour
     private Animator playerAnimator;
     private CharacterController cc;
 
+    private SphereCollider col;
+
     [Header("Character Movement Stats")]
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float rotateSpeed = 10f;
 
     void Start()
     {
+        col = GetComponent<SphereCollider>();
         cc = GetComponent<CharacterController>();
         playerAnimator = GetComponentInChildren<Animator>();
     }
@@ -24,6 +27,13 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             return false;
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Enemy Detected");
         }
     }
     void Update()
