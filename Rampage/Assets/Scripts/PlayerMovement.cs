@@ -1,11 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     private Animator playerAnimator;
     private CharacterController cc;
-
-    private SphereCollider col;
+    private List <GameObject> detectedZombies;
 
     [Header("Character Movement Stats")]
     [SerializeField] private float moveSpeed = 1f;
@@ -13,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        col = GetComponent<SphereCollider>();
         cc = GetComponent<CharacterController>();
         playerAnimator = GetComponentInChildren<Animator>();
     }
@@ -53,6 +52,8 @@ public class PlayerMovement : MonoBehaviour
     {
         
     }
+
+    
 
 
     private void Move()
