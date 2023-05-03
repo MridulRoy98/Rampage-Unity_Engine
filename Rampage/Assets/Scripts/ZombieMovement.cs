@@ -15,6 +15,7 @@ public class ZombieMovement : MonoBehaviour
     private NavMeshSurface surface;
 
     private bool isChasing = false;
+    [SerializeField] private GameObject destroyer;
 
     private void Awake()
     {
@@ -23,6 +24,10 @@ public class ZombieMovement : MonoBehaviour
         zombieAnimator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         surface = navmeshSurface.GetComponent<NavMeshSurface>();
+    }
+    private void Start()
+    {
+        destroyer = GameObject.Find("Zombie_Destroyer");
     }
     void Update()
     {
@@ -116,6 +121,14 @@ public class ZombieMovement : MonoBehaviour
             case 2:
                 zombieAnimator.SetBool("zombie_crawl", true);
                 break;
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.name == destroyer.name)
+        {
+            Debug.Log("yahoo");
+            Destroy(gameObject);
         }
     }
 }

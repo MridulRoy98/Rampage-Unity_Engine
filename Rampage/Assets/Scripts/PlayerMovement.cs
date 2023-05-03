@@ -1,9 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     private Animator playerAnimator;
     private CharacterController cc;
+    private List <GameObject> detectedZombies;
+
+    [Header("Enemy Detection Criteria")]
+    [SerializeField] private int checkSphereRadius = 5;
+    [SerializeField] private LayerMask enemyLayer;
 
     [Header("Character Movement Stats")]
     [SerializeField] private float moveSpeed = 1f;
@@ -11,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        detectedZombies = new List<GameObject>();
         cc = GetComponent<CharacterController>();
         playerAnimator = GetComponentInChildren<Animator>();
     }
@@ -26,6 +33,13 @@ public class PlayerMovement : MonoBehaviour
             return false;
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Enemy Detected");
+        }
+    }
     void Update()
     {
         if (isMoving())
@@ -35,13 +49,30 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             playerAnimator.SetBool("isRunning", false);
-            ShootingMode();
+            checkEnemiesWithinRadius();
         }
     }
 
-    private void ShootingMode()
+    private void checkEnemiesWithinRadius()
     {
-        
+        if (Physics.CheckSphere(transform.position, checkSphereRadius, enemyLayer))
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, checkSphereRadius, enemyLayer);
+
+            // Loop through all colliders within the sphere
+            foreach (Collider collider in colliders)
+            {
+                detectedZombies.Add(collider.gameObject);
+            }
+        }
+    }
+
+
+    void OnDrawGizmosSelected()
+    {
+        // Draw a wire sphere in the scene view
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, checkSphereRadius);
     }
 
 
@@ -70,6 +101,8 @@ public class PlayerMovement : MonoBehaviour
         else playerAnimator.SetBool("isRunning", false);
     }
 
+
+    //For zombies to get player's location
     public Vector3 GetPlayerPosition()
     {
         return transform.position;

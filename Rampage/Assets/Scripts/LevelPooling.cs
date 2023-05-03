@@ -1,9 +1,5 @@
-using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using UnityEngine.AI;
-using JetBrains.Annotations;
-using System.Runtime.CompilerServices;
 using Unity.AI.Navigation;
 
 public class LevelPooling : MonoBehaviour
@@ -22,7 +18,6 @@ public class LevelPooling : MonoBehaviour
     [SerializeField] private GameObject[] levelPrefabs;
     [SerializeField] private Transform levelParent;
     [SerializeField] private GameObject[] spawnedLevels;
-
     [SerializeField] private NavMeshSurface surface;
 
     private void Start()
