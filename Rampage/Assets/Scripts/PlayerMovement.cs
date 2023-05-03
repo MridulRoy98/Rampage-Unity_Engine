@@ -44,7 +44,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isMoving())
         {
-            Debug.ClearDeveloperConsole();
             Move();
         }
         else
@@ -64,10 +63,10 @@ public class PlayerMovement : MonoBehaviour
             foreach (Collider collider in colliders)
             {
                 detectedZombies.Add(collider.gameObject);
-                Debug.Log(collider.gameObject.name);
             }
         }
     }
+
 
     void OnDrawGizmosSelected()
     {
@@ -75,7 +74,6 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, checkSphereRadius);
     }
-
 
 
     private void Move()

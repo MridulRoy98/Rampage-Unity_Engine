@@ -1183,6 +1183,7 @@ MonoBehaviour:
   player: {fileID: 0}
   navmeshSurface: {fileID: 5659968097447665171, guid: 557b24cd9515ad949818d32e575a5d8e,
     type: 3}
+  destroyer: {fileID: 0}
 --- !u!136 &8101944164534690070
 CapsuleCollider:
   m_ObjectHideFlags: 0
