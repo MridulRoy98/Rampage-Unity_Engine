@@ -2516,6 +2516,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7aa4d2bd7b8f094f89da5d7c49ec72c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkSphereRadius: 9
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
   moveSpeed: 2.8
   rotateSpeed: 9.5
 --- !u!1 &1298963701
