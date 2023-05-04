@@ -49,11 +49,12 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             playerAnimator.SetBool("isRunning", false);
-            checkEnemiesWithinRadius();
+            CheckEnemiesWithinRadius();
+            FindClosestEnemy();
         }
     }
 
-    private void checkEnemiesWithinRadius()
+    private void CheckEnemiesWithinRadius()
     {
         if (Physics.CheckSphere(transform.position, checkSphereRadius, enemyLayer))
         {
@@ -67,6 +68,22 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private GameObject FindClosestEnemy()
+    {
+        float distance = 99f;
+        GameObject closestEnemy = null;
+        foreach (var detectedZombie in detectedZombies)
+        {
+            float tempDistance = Vector3.Distance(transform.position, detectedZombie.transform.position);
+            if (tempDistance < distance)
+            {
+                distance = tempDistance;
+                closestEnemy = detectedZombie;
+            }
+        }
+        Debug.Log("The closest enemy is: " + closestEnemy);
+        return closestEnemy; 
+    }
 
     void OnDrawGizmosSelected()
     {
