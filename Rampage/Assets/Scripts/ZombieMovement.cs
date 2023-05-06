@@ -127,7 +127,6 @@ public class ZombieMovement : MonoBehaviour
     {
         if(other.gameObject.name == destroyer.name)
         {
-            Debug.Log("yahoo");
             Destroy(gameObject);
         }
     }

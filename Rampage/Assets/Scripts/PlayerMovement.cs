@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -33,13 +34,7 @@ public class PlayerMovement : MonoBehaviour
             return false;
         }
     }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.CompareTag("Enemy"))
-        {
-            Debug.Log("Enemy Detected");
-        }
-    }
+
     void Update()
     {
         if (isMoving())
@@ -51,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
             playerAnimator.SetBool("isRunning", false);
             CheckEnemiesWithinRadius();
             FindClosestEnemy();
+            //ShootClosestEnemy();
         }
     }
 
@@ -74,15 +70,30 @@ public class PlayerMovement : MonoBehaviour
         GameObject closestEnemy = null;
         foreach (var detectedZombie in detectedZombies)
         {
-            float tempDistance = Vector3.Distance(transform.position, detectedZombie.transform.position);
-            if (tempDistance < distance)
+            if(detectedZombie != null)
             {
-                distance = tempDistance;
-                closestEnemy = detectedZombie;
+                float tempDistance = Vector3.Distance(transform.position, detectedZombie.transform.position);
+                if (tempDistance < distance)
+                {
+                    distance = tempDistance;
+                    closestEnemy = detectedZombie;
+                }
             }
         }
-        Debug.Log("The closest enemy is: " + closestEnemy);
+        Debug.Log(closestEnemy);
+        Vector3 enemyDirection = closestEnemy.transform.position - this.transform.position;
+        float angleToEnemy = Mathf.Atan2(enemyDirection.y, enemyDirection.x) * Mathf.Rad2Deg;
+        Quaternion targetRotation = Quaternion.Euler(0, angleToEnemy, 0);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed);
         return closestEnemy; 
+    }
+    private void ShootClosestEnemy()
+    {
+        GameObject target = FindClosestEnemy();
+        Vector3 enemyDirection = target.transform.position - transform.position;
+        float angleToEnemy = Mathf.Atan2(enemyDirection.x, enemyDirection.z) * Mathf.Rad2Deg;
+        Quaternion targetRotation = Quaternion.Euler(0, angleToEnemy, 0);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed);
     }
 
     void OnDrawGizmosSelected()
