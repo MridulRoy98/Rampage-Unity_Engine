@@ -2458,6 +2458,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
+  aimSpeed: 8
   moveSpeed: 2.8
   rotateSpeed: 9.5
 --- !u!1 &1298963701

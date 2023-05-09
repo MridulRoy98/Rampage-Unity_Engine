@@ -1,21 +1,23 @@
 using Unity.AI.Navigation;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class ZombieMovement : MonoBehaviour
 {
     [SerializeField] private GameObject player;
+    [SerializeField] private GameObject destroyer;
     PlayerMovement playermovement;
 
+    [Header("Navmesh things")]
     private NavMeshAgent agent;
-    private Animator zombieAnimator;
-    private float rotationSpeed = 1f;
     public GameObject navmeshSurface;
     private NavMeshSurface surface;
 
+    [Header("Zombie Stats")]
+    private Animator zombieAnimator;
+    private float rotationSpeed = 1f;
     private bool isChasing = false;
-    [SerializeField] private GameObject destroyer;
+
 
     private void Awake()
     {
@@ -32,7 +34,7 @@ public class ZombieMovement : MonoBehaviour
     void Update()
     {
         setSpeed();
-        ChaseMode();
+        StateSelection();
         if (isChasing == true)
         {
             FollowPlayer();
@@ -40,11 +42,12 @@ public class ZombieMovement : MonoBehaviour
         }
         else
         {
-            Attack();
+            AttackMode();
         }
     }
 
-    private void ChaseMode()
+    //Deciding whether the zombie should chase or attack
+    private void StateSelection()
     {
         float distance = Vector3.Distance(transform.position, playermovement.GetPlayerPosition());
         if (distance > 1f)
@@ -58,6 +61,8 @@ public class ZombieMovement : MonoBehaviour
             isChasing=false;
         }
     }
+
+    //Chasing
     private void FollowPlayer()
     {
         agent.SetDestination(playermovement.GetPlayerPosition());
@@ -67,7 +72,8 @@ public class ZombieMovement : MonoBehaviour
         chasingAnimation();
     }
 
-    private void Attack()
+    //Attacking
+    private void AttackMode()
     {
         int animNumber = Random.Range(0, 2);
         switch (animNumber)
@@ -83,6 +89,8 @@ public class ZombieMovement : MonoBehaviour
                 break;
         }
     }
+
+    //Randomize speed for different zombie animations
     private void setSpeed()
     {
         if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Walk"))
@@ -105,6 +113,8 @@ public class ZombieMovement : MonoBehaviour
             isChasing = false;
         }
     }
+
+    //Randome chase animation
     private void chasingAnimation()
     {
         int animNumber = Random.Range(0, 3);
@@ -123,6 +133,8 @@ public class ZombieMovement : MonoBehaviour
                 break;
         }
     }
+
+    //Destroys zombie when collides with object named Destroyer
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.name == destroyer.name)

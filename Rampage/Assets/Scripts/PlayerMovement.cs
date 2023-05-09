@@ -8,9 +8,10 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController cc;
     private List <GameObject> detectedZombies;
 
-    [Header("Enemy Detection Criteria")]
+    [Header("Enemy Detection Stats")]
     [SerializeField] private int checkSphereRadius = 5;
     [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private float aimSpeed = 10f;
 
     [Header("Character Movement Stats")]
     [SerializeField] private float moveSpeed = 1f;
@@ -23,9 +24,22 @@ public class PlayerMovement : MonoBehaviour
         playerAnimator = GetComponentInChildren<Animator>();
     }
 
+    void Update()
+    {
+        if (isMoving())
+        {
+            Move();
+        }
+        else
+        {
+            playerAnimator.SetBool("isRunning", false);
+            ShootClosestEnemy();
+        }
+    }
+
     private bool isMoving()
     {
-        if(Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
+        if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
         {
             return true;
         }
@@ -35,21 +49,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        ShootClosestEnemy();
-        //if (isMoving())
-        //{
-        //    Move();
-        //}
-        //else
-        //{
-        //    playerAnimator.SetBool("isRunning", false);
-        //    CheckEnemiesWithinRadius();
-        //    ShootClosestEnemy();
-        //}
-    }
-
+    //Checks for enemies within a specific range and adds to list
     private void CheckEnemiesWithinRadius()
     {
         if (Physics.CheckSphere(transform.position, checkSphereRadius, enemyLayer))
@@ -62,12 +62,13 @@ public class PlayerMovement : MonoBehaviour
                 if (!detectedZombies.Contains(collider.gameObject))
                 {
                     detectedZombies.Add(collider.gameObject);
-                    Debug.Log(detectedZombies.Count);
+                    Debug.Log("Number of enemies in sight: " + detectedZombies.Count);
                 }
             }
         }
     }
 
+    //Returns the closest enemy from the enemy list
     private GameObject FindClosestEnemy()
     {
         float distance = Mathf.Infinity;
@@ -86,19 +87,24 @@ public class PlayerMovement : MonoBehaviour
         }
         return closestEnemy; 
     }
+
+    //Aims towards the closest enemy from the list
     private void ShootClosestEnemy()
     {
         CheckEnemiesWithinRadius();
         GameObject target = FindClosestEnemy();
 
-        if(target != null)
+
+        //Multiplied by Quaternion.Euler(0, 180, 0), because the scene is rotated and vector forward of the player is 180 rotated
+        if (target != null)
         {
             Vector3 enemyDirection = target.transform.position - transform.position;
             Quaternion lookRotation = Quaternion.LookRotation(enemyDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, (lookRotation * Quaternion.Euler(0, 180, 0)), rotateSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, (lookRotation * Quaternion.Euler(0, 170, 0)), aimSpeed * Time.deltaTime);
         }
     }
 
+    //Visualize the range
     void OnDrawGizmosSelected()
     {
         // Draw a wire sphere in the scene view
@@ -106,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, checkSphereRadius);
     }
 
-
+    //Handles player input and character movement
     private void Move()
     {   
         //Get Player Input
