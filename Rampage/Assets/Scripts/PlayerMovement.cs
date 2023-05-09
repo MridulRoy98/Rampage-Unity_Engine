@@ -37,17 +37,17 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (isMoving())
-        {
-            Move();
-        }
-        else
-        {
-            playerAnimator.SetBool("isRunning", false);
-            CheckEnemiesWithinRadius();
-            FindClosestEnemy();
-            //ShootClosestEnemy();
-        }
+        ShootClosestEnemy();
+        //if (isMoving())
+        //{
+        //    Move();
+        //}
+        //else
+        //{
+        //    playerAnimator.SetBool("isRunning", false);
+        //    CheckEnemiesWithinRadius();
+        //    ShootClosestEnemy();
+        //}
     }
 
     private void CheckEnemiesWithinRadius()
@@ -59,14 +59,18 @@ public class PlayerMovement : MonoBehaviour
             // Loop through all colliders within the sphere
             foreach (Collider collider in colliders)
             {
-                detectedZombies.Add(collider.gameObject);
+                if (!detectedZombies.Contains(collider.gameObject))
+                {
+                    detectedZombies.Add(collider.gameObject);
+                    Debug.Log(detectedZombies.Count);
+                }
             }
         }
     }
 
     private GameObject FindClosestEnemy()
     {
-        float distance = 99f;
+        float distance = Mathf.Infinity;
         GameObject closestEnemy = null;
         foreach (var detectedZombie in detectedZombies)
         {
@@ -80,20 +84,19 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-        Debug.Log(closestEnemy);
-        Vector3 enemyDirection = closestEnemy.transform.position - this.transform.position;
-        float angleToEnemy = Mathf.Atan2(enemyDirection.y, enemyDirection.x) * Mathf.Rad2Deg;
-        Quaternion targetRotation = Quaternion.Euler(0, angleToEnemy, 0);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed);
         return closestEnemy; 
     }
     private void ShootClosestEnemy()
     {
+        CheckEnemiesWithinRadius();
         GameObject target = FindClosestEnemy();
-        Vector3 enemyDirection = target.transform.position - transform.position;
-        float angleToEnemy = Mathf.Atan2(enemyDirection.x, enemyDirection.z) * Mathf.Rad2Deg;
-        Quaternion targetRotation = Quaternion.Euler(0, angleToEnemy, 0);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed);
+
+        if(target != null)
+        {
+            Vector3 enemyDirection = target.transform.position - transform.position;
+            Quaternion lookRotation = Quaternion.LookRotation(enemyDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, (lookRotation * Quaternion.Euler(0, 180, 0)), rotateSpeed);
+        }
     }
 
     void OnDrawGizmosSelected()
