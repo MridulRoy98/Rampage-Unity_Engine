@@ -35,10 +35,9 @@ public class ZombieMovement : MonoBehaviour
     }
     void Update()
     {
-        setSpeed();
         ModeSelection();
-        
-        if (isChasing == true)
+        setSpeed();
+        if (isChasing)
         {
             FollowMode();
         }
@@ -137,7 +136,7 @@ public class ZombieMovement : MonoBehaviour
         }
     }
 
-    //Destroys zombie when collides with object named Destroyer
+    //Destroys zombie when too far from player
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.name == destroyer.name)
@@ -147,26 +146,12 @@ public class ZombieMovement : MonoBehaviour
     }
 
     ///////////////////////////////////////////////////////////
-    
     //Combat Mode//
-    //private void InflictingDamage()
-    //{
-    //    canDamage = false;
-    //    Vector3 Direction = (playermovement.GetPlayerPosition() - transform.position).normalized;
-    //    float dotProduct = Vector3.Dot(transform.forward, Direction);
-    //    float distanceToPlayer = Vector3.Distance(transform.position, playermovement.GetPlayerPosition());
-
-    //    if(DamageOn() && dotProduct > 0.9f && distanceToPlayer <1.4f)
-    //    {
-    //        canDamage = true;
-    //    }
-    //}
-
     private void OnTriggerStay(Collider collider)
     {
         if (collider.gameObject == player && canDamage == true)
         {
-            Debug.Log("trigger damage");
+            //Trigger Event
         }
     }
 
