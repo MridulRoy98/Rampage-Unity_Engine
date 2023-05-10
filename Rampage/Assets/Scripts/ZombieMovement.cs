@@ -1,4 +1,5 @@
 using Unity.AI.Navigation;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,6 +18,7 @@ public class ZombieMovement : MonoBehaviour
     private Animator zombieAnimator;
     private float rotationSpeed = 1f;
     private bool isChasing = false;
+    private bool canDamage = false;
 
 
     private void Awake()
@@ -34,20 +36,21 @@ public class ZombieMovement : MonoBehaviour
     void Update()
     {
         setSpeed();
-        StateSelection();
+        ModeSelection();
+        
         if (isChasing == true)
         {
-            FollowPlayer();
-            
+            FollowMode();
         }
         else
         {
             AttackMode();
         }
+
     }
 
     //Deciding whether the zombie should chase or attack
-    private void StateSelection()
+    private void ModeSelection()
     {
         float distance = Vector3.Distance(transform.position, playermovement.GetPlayerPosition());
         if (distance > 1f)
@@ -63,7 +66,7 @@ public class ZombieMovement : MonoBehaviour
     }
 
     //Chasing
-    private void FollowPlayer()
+    private void FollowMode()
     {
         agent.SetDestination(playermovement.GetPlayerPosition());
         Vector3 lookDirection = playermovement.GetPlayerPosition() - transform.position;
@@ -143,15 +146,39 @@ public class ZombieMovement : MonoBehaviour
         }
     }
 
+    ///////////////////////////////////////////////////////////
+    
+    //Combat Mode//
+    //private void InflictingDamage()
+    //{
+    //    canDamage = false;
+    //    Vector3 Direction = (playermovement.GetPlayerPosition() - transform.position).normalized;
+    //    float dotProduct = Vector3.Dot(transform.forward, Direction);
+    //    float distanceToPlayer = Vector3.Distance(transform.position, playermovement.GetPlayerPosition());
+
+    //    if(DamageOn() && dotProduct > 0.9f && distanceToPlayer <1.4f)
+    //    {
+    //        canDamage = true;
+    //    }
+    //}
+
+    private void OnTriggerStay(Collider collider)
+    {
+        if (collider.gameObject == player && canDamage == true)
+        {
+            Debug.Log("trigger damage");
+        }
+    }
+
     //Animation Events//
     private bool DamageOn()
     {
-        Debug.Log("Can Damage");
+        canDamage = true;
         return true;
     }
     private bool DamageOff()
     {
-        Debug.Log("Cannot Damage");
+        canDamage = false;
         return true;
     }
     /////////////////////////

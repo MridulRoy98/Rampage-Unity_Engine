@@ -3686,6 +3686,7 @@ GameObject:
   - component: {fileID: 95548587488603018}
   - component: {fileID: 4696664581062796340}
   - component: {fileID: -6213734785527652967}
+  - component: {fileID: 7639287532263319710}
   m_Layer: 7
   m_Name: Zombie_Daughter_Female_01
   m_TagString: Untagged
@@ -3773,7 +3774,7 @@ NavMeshAgent:
   m_Acceleration: 5
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 1
+  m_StoppingDistance: 1.3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -3814,9 +3815,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  destroyer: {fileID: 0}
   navmeshSurface: {fileID: 5659968097447665171, guid: 557b24cd9515ad949818d32e575a5d8e,
     type: 3}
-  destroyer: {fileID: 0}
 --- !u!136 &-6213734785527652967
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3831,6 +3832,19 @@ CapsuleCollider:
   m_Height: 1.8554003
   m_Direction: 1
   m_Center: {x: 0, y: 0.9372269, z: 0}
+--- !u!65 &7639287532263319710
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442989148144956}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 1.25, z: 0.76}
 --- !u!1 &1450010613998766
 GameObject:
   m_ObjectHideFlags: 0
