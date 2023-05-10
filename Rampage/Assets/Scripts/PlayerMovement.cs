@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
                 if (!detectedZombies.Contains(collider.gameObject))
                 {
                     detectedZombies.Add(collider.gameObject);
-                    Debug.Log("Number of enemies in sight: " + detectedZombies.Count);
+                    //Debug.Log("Number of enemies in sight: " + detectedZombies.Count);
                 }
             }
         }
@@ -137,7 +137,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else playerAnimator.SetBool("isRunning", false);
     }
-
 
     //For zombies to get player's location
     public Vector3 GetPlayerPosition()

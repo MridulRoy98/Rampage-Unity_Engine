@@ -114,7 +114,7 @@ public class ZombieMovement : MonoBehaviour
         }
     }
 
-    //Randome chase animation
+    //Randomize chase animation
     private void chasingAnimation()
     {
         int animNumber = Random.Range(0, 3);
@@ -142,4 +142,17 @@ public class ZombieMovement : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    //Animation Events//
+    private bool DamageOn()
+    {
+        Debug.Log("Can Damage");
+        return true;
+    }
+    private bool DamageOff()
+    {
+        Debug.Log("Cannot Damage");
+        return true;
+    }
+    /////////////////////////
 }
