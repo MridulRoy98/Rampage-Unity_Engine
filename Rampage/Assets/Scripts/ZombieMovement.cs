@@ -1,5 +1,5 @@
+using System;
 using Unity.AI.Navigation;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -20,6 +20,8 @@ public class ZombieMovement : MonoBehaviour
     private bool isChasing = false;
     private bool canDamage = false;
 
+    public delegate void ZombieDamageEventHandler(object source, EventArgs args);
+    public event ZombieDamageEventHandler InflictedDamage;
 
     private void Awake()
     {
@@ -77,7 +79,7 @@ public class ZombieMovement : MonoBehaviour
     //Attacking
     private void AttackMode()
     {
-        int animNumber = Random.Range(0, 2);
+        int animNumber = UnityEngine.Random.Range(0, 2);
         switch (animNumber)
         {
             case 0:
@@ -97,17 +99,17 @@ public class ZombieMovement : MonoBehaviour
     {
         if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Walk"))
         {
-            agent.speed = Random.Range(0.4f, 0.5f);
+            agent.speed = UnityEngine.Random.Range(0.4f, 0.5f);
             isChasing = true;
         }
         else if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Run"))
         {
-            agent.speed = Random.Range(1.4f, 1.6f);
+            agent.speed = UnityEngine.Random.Range(1.4f, 1.6f);
             isChasing = true;
         }
         else if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Crawl"))
         {
-            agent.speed = Random.Range(2.8f, 3f);
+            agent.speed = UnityEngine.Random.Range(2.8f, 3f);
             isChasing = true;
         }
         else
@@ -119,7 +121,7 @@ public class ZombieMovement : MonoBehaviour
     //Randomize chase animation
     private void chasingAnimation()
     {
-        int animNumber = Random.Range(0, 3);
+        int animNumber = UnityEngine.Random.Range(0, 3);
         switch (animNumber)
         {
             case 0:
@@ -145,6 +147,14 @@ public class ZombieMovement : MonoBehaviour
         }
     }
 
+    protected virtual void OnInflictedDamage()
+    {
+        if(InflictedDamage != null)
+        {
+            InflictedDamage(this, EventArgs.Empty);
+        }
+    }
+
     ///////////////////////////////////////////////////////////
     //Combat Mode//
     private void OnTriggerStay(Collider collider)
@@ -152,6 +162,7 @@ public class ZombieMovement : MonoBehaviour
         if (collider.gameObject == player && canDamage == true)
         {
             //Trigger Event
+            OnInflictedDamage();
         }
     }
 
