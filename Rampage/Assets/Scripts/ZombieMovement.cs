@@ -1,4 +1,5 @@
 using System;
+//using System.Diagnostics;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
@@ -17,7 +18,7 @@ public class ZombieMovement : MonoBehaviour
     [Header("Zombie Stats")]
     private Animator zombieAnimator;
     private float rotationSpeed = 1f;
-    private bool isChasing = false;
+    public bool isChasing = false;
     private bool canDamage = false;
 
     public delegate void ZombieDamageEventHandler(object source, EventArgs args);
@@ -76,48 +77,6 @@ public class ZombieMovement : MonoBehaviour
         chasingAnimation();
     }
 
-    //Attacking
-    private void AttackMode()
-    {
-        int animNumber = UnityEngine.Random.Range(0, 2);
-        switch (animNumber)
-        {
-            case 0:
-                zombieAnimator.SetBool("zombie_attack", true);
-                isChasing = false;
-                break;
-                
-            case 1:
-                zombieAnimator.SetBool("zombie_slam", true);
-                isChasing = false;
-                break;
-        }
-    }
-
-    //Randomize speed for different zombie animations
-    private void setSpeed()
-    {
-        if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Walk"))
-        {
-            agent.speed = UnityEngine.Random.Range(0.4f, 0.5f);
-            isChasing = true;
-        }
-        else if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Run"))
-        {
-            agent.speed = UnityEngine.Random.Range(1.4f, 1.6f);
-            isChasing = true;
-        }
-        else if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Crawl"))
-        {
-            agent.speed = UnityEngine.Random.Range(2.8f, 3f);
-            isChasing = true;
-        }
-        else
-        {
-            isChasing = false;
-        }
-    }
-
     //Randomize chase animation
     private void chasingAnimation()
     {
@@ -135,6 +94,41 @@ public class ZombieMovement : MonoBehaviour
             case 2:
                 zombieAnimator.SetBool("zombie_crawl", true);
                 break;
+        }
+    }
+
+    //Attacking
+    private void AttackMode()
+    {
+        Debug.Log("inAttackMode");
+        isChasing = false;
+        int animNumber = UnityEngine.Random.Range(0, 2);
+        switch (animNumber)
+        {
+            case 0:
+                zombieAnimator.SetBool("zombie_attack", true);
+                break;
+                
+            case 1:
+                zombieAnimator.SetBool("zombie_slam", true);
+                break;
+        }
+    }
+
+    //Randomize speed for different zombie animations
+    private void setSpeed()
+    {
+        if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Walk"))
+        {
+            agent.speed = UnityEngine.Random.Range(0.4f, 0.5f);
+        }
+        else if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Run"))
+        {
+            agent.speed = UnityEngine.Random.Range(1.4f, 1.6f);
+        }
+        else if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("Zombie_Crawl"))
+        {
+            agent.speed = UnityEngine.Random.Range(2.8f, 3f);
         }
     }
 
